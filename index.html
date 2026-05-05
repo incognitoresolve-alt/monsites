@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide Gratuit 2026 – Protégez Votre Avenir</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0f1f3d;
+            --gold: #c9a84c;
+            --cream: #faf7f2;
+            --warm-gray: #8c8279;
+            --white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--navy);
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        /* LEFT PANEL */
+        .left-panel {
+            padding: 80px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .left-panel::before {
+            content: '';
+            position: absolute;
+            top: -150px; left: -150px;
+            width: 500px; height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(201,168,76,0.1) 0%, transparent 70%);
+        }
+
+        .brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: var(--gold);
+            letter-spacing: 0.1em;
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .left-panel h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.2rem, 3vw, 3.2rem);
+            font-weight: 300;
+            color: var(--white);
+            line-height: 1.2;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .left-panel h1 em {
+            color: var(--gold);
+            font-style: italic;
+        }
+
+        .left-panel > p {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.5);
+            line-height: 1.7;
+            max-width: 380px;
+            margin-bottom: 48px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .benefit-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .benefit-list li {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.65);
+        }
+
+        .benefit-list li::before {
+            content: '';
+            flex-shrink: 0;
+            width: 20px; height: 20px;
+            border-radius: 50%;
+            background: rgba(201,168,76,0.2);
+            border: 1px solid rgba(201,168,76,0.4);
+            background-image: url("data:image/svg+xml,%3Csvg width='10' height='8' viewBox='0 0 10 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4L3.5 6.5L9 1' stroke='%23c9a84c' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        /* RIGHT PANEL */
+        .right-panel {
+            background: var(--cream);
+            padding: 80px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-header {
+            margin-bottom: 40px;
+        }
+
+        .form-tag {
+            display: inline-block;
+            background: rgba(201,168,76,0.15);
+            color: var(--gold);
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            padding: 6px 14px;
+            border-radius: 100px;
+            margin-bottom: 20px;
+        }
+
+        .form-header h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 400;
+            color: var(--navy);
+            line-height: 1.25;
+            margin-bottom: 10px;
+        }
+
+        .form-header p {
+            font-size: 0.85rem;
+            color: var(--warm-gray);
+        }
+
+        form { display: flex; flex-direction: column; gap: 20px; }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--navy);
+        }
+
+        input {
+            padding: 14px 16px;
+            border: 1.5px solid #e2ddd6;
+            border-radius: 3px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.92rem;
+            color: var(--navy);
+            background: var(--white);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(201,168,76,0.12);
+        }
+
+        input::placeholder { color: #b8b0a6; }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--navy);
+            color: var(--white);
+            border: none;
+            border-radius: 3px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-top: 4px;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(15,31,61,0.25);
+        }
+
+        .submit-btn:disabled { opacity: 0.7; cursor: default; }
+
+        .submit-btn .btn-inner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .loader {
+            width: 16px; height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            display: none;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .privacy {
+            font-size: 0.72rem;
+            color: var(--warm-gray);
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        /* Status messages */
+        .status {
+            padding: 14px 18px;
+            border-radius: 3px;
+            font-size: 0.85rem;
+            display: none;
+            line-height: 1.5;
+        }
+
+        .status.success {
+            background: #ecfdf5;
+            color: #065f46;
+            border: 1px solid #6ee7b7;
+            display: block;
+        }
+
+        .status.error {
+            background: #fef2f2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+            display: block;
+        }
+
+        /* SUCCESS STATE */
+        .success-state {
+            display: none;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .success-state.visible { display: block; }
+
+        .success-icon {
+            width: 64px; height: 64px;
+            background: rgba(201,168,76,0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+        }
+
+        .success-state h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: var(--navy);
+            margin-bottom: 12px;
+        }
+
+        .success-state p {
+            font-size: 0.88rem;
+            color: var(--warm-gray);
+            line-height: 1.7;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            body { grid-template-columns: 1fr; }
+            .left-panel { padding: 60px 28px 40px; }
+            .right-panel { padding: 40px 28px 60px; }
+            .left-panel h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LEFT -->
+    <div class="left-panel">
+        <div class="brand">Cabinet Conseil Assurance</div>
+        <h1>Votre guide <em>complet</em> pour sécuriser l'avenir</h1>
+        <p>Épargne, santé, prévoyance et retraite : recevez instantanément notre guide 2026 adapté au contexte belge.</p>
+
+        <ul class="benefit-list">
+            <li>Les stratégies d'épargne fiscalement avantageuses</li>
+            <li>Comment choisir la bonne couverture santé</li>
+            <li>Anticiper la transmission de votre patrimoine</li>
+            <li>Planifier votre retraite étape par étape</li>
+            <li>Un plan d'action personnalisé en conclusion</li>
+        </ul>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="right-panel">
+        <div id="formContainer">
+            <div class="form-header">
+                <div class="form-tag">Accès gratuit et immédiat</div>
+                <h2>Recevez le guide par email</h2>
+                <p>Accédez à votre guide personnalisé en quelques secondes.</p>
+            </div>
+
+            <form id="captureForm" onsubmit="envoyerDonnees(event)">
+                <div class="field">
+                    <label for="nom">Nom complet *</label>
+                    <input type="text" id="nom" required placeholder="Jean Dupont">
+                </div>
+                <div class="field">
+                    <label for="email">Adresse email *</label>
+                    <input type="email" id="email" required placeholder="jean@exemple.com">
+                </div>
+                <div class="field">
+                    <label for="telephone">Téléphone (optionnel)</label>
+                    <input type="tel" id="telephone" placeholder="04 XX XX XX XX">
+                </div>
+
+                <div id="statusMsg" class="status"></div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    <span class="btn-inner">
+                        <span id="btnText">Recevoir mon guide →</span>
+                        <span class="loader" id="btnLoader"></span>
+                    </span>
+                </button>
+
+                <p class="privacy">Vos données sont confidentielles et ne seront jamais revendues.<br>Vous pouvez vous désinscrire à tout moment.</p>
+            </form>
+        </div>
+
+        <div class="success-state" id="successState">
+            <div class="success-icon">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                    <path d="M5 14L10.5 19.5L23 7" stroke="#c9a84c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <h3>Votre guide est en route !</h3>
+            <p>Vérifiez votre boîte mail dans quelques instants.<br>Si vous ne le trouvez pas, pensez à vérifier vos spams.</p>
+        </div>
+    </div>
+
+    <script>
+        async function envoyerDonnees(event) {
+            event.preventDefault();
+
+            const btn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const loader = document.getElementById('btnLoader');
+            const statusMsg = document.getElementById('statusMsg');
+
+            const donneesProspect = {
+                nom: document.getElementById('nom').value,
+                email: document.getElementById('email').value,
+                telephone: document.getElementById('telephone').value
+            };
+
+            // Loading state
+            btn.disabled = true;
+            btnText.textContent = 'Envoi en cours...';
+            loader.style.display = 'block';
+            statusMsg.className = 'status';
+            statusMsg.style.display = 'none';
+
+            try {
+                const reponse = await fetch('/.netlify/functions/automatisation', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(donneesProspect)
+                });
+
+                if (reponse.ok) {
+                    document.getElementById('formContainer').style.display = 'none';
+                    document.getElementById('successState').classList.add('visible');
+                } else {
+                    throw new Error('Erreur serveur');
+                }
+            } catch {
+                statusMsg.textContent = 'Une erreur est survenue. Veuillez réessayer ou nous contacter directement.';
+                statusMsg.className = 'status error';
+                btn.disabled = false;
+                btnText.textContent = 'Réessayer →';
+                loader.style.display = 'none';
+            }
+        }
+    </script>
+
+</body>
+</html>
