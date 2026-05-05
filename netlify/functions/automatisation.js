@@ -1,5 +1,5 @@
 // netlify/functions/automatisation.js
-// Utilise Groq (gratuit) à la place d'OpenAI
+// Utilise Groq (gratuit) et Brevo
 
 exports.handler = async function(event, context) {
 
@@ -16,7 +16,7 @@ exports.handler = async function(event, context) {
         }
 
         // ─────────────────────────────────────────
-        // ÉTAPE 1 : Message personnalisé via Groq (GRATUIT)
+        // ÉTAPE 1 : Message personnalisé via Groq
         // ─────────────────────────────────────────
         const aiPrompt = `Tu es un conseiller en assurance belge, chaleureux et professionnel.
 Écris une phrase d'introduction personnalisée (2 phrases max, ton humain et bienveillant) 
@@ -43,16 +43,15 @@ La phrase doit être directe, sans "Cher/Chère", commencer par son prénom.`;
             const groqData = await groqResponse.json();
             messageIA = groqData.choices?.[0]?.message?.content || messageIA;
         } catch (aiError) {
-            // Si Groq échoue, on continue avec le message par défaut
             console.warn("Groq indisponible, message par défaut utilisé:", aiError.message);
         }
 
         // ─────────────────────────────────────────
-        // ÉTAPE 2 : Envoi de l'email via Brevo
+        // ÉTAPE 2 : Envoi du guide au PROSPECT via Brevo
         // ─────────────────────────────────────────
         const guideUrl = process.env.GUIDE_URL;
 
-        const emailHtml = `
+        const emailHtmlProspect = `
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -67,7 +66,6 @@ La phrase doit être directe, sans "Cher/Chère", commencer par son prénom.`;
     <td align="center">
       <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:4px;overflow:hidden;box-shadow:0 2px 20px rgba(0,0,0,0.08);">
         
-        <!-- HEADER -->
         <tr>
           <td style="background:#0f1f3d;padding:48px 48px 40px;">
             <p style="font-family:Georgia,serif;font-size:13px;letter-spacing:3px;text-transform:uppercase;color:#c9a84c;margin:0 0 24px 0;">Cabinet Conseil Assurance</p>
@@ -77,43 +75,15 @@ La phrase doit être directe, sans "Cher/Chère", commencer par son prénom.`;
           </td>
         </tr>
 
-        <!-- BODY -->
         <tr>
           <td style="padding:48px;">
-            
             <p style="font-size:16px;color:#1a1a2e;line-height:1.7;margin:0 0 24px 0;">
               ${messageIA}
             </p>
-
             <p style="font-size:15px;color:#5a5248;line-height:1.7;margin:0 0 32px 0;">
-              Ce guide complet couvre les 5 domaines essentiels pour sécuriser votre avenir financier en Belgique :
+              Ce guide complet couvre les domaines essentiels pour sécuriser votre avenir financier en Belgique.
             </p>
 
-            <!-- CHAPTER LIST -->
-            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:40px;">
-              <tr><td style="padding:10px 0;border-bottom:1px solid #f0ebe3;">
-                <span style="color:#c9a84c;font-family:Georgia,serif;font-size:13px;">01 —</span>
-                <span style="color:#1a1a2e;font-size:14px;margin-left:10px;">Protéger et faire fructifier votre épargne</span>
-              </td></tr>
-              <tr><td style="padding:10px 0;border-bottom:1px solid #f0ebe3;">
-                <span style="color:#c9a84c;font-family:Georgia,serif;font-size:13px;">02 —</span>
-                <span style="color:#1a1a2e;font-size:14px;margin-left:10px;">Choisir la couverture santé adaptée à votre vie</span>
-              </td></tr>
-              <tr><td style="padding:10px 0;border-bottom:1px solid #f0ebe3;">
-                <span style="color:#c9a84c;font-family:Georgia,serif;font-size:13px;">03 —</span>
-                <span style="color:#1a1a2e;font-size:14px;margin-left:10px;">Anticiper la transmission de votre patrimoine</span>
-              </td></tr>
-              <tr><td style="padding:10px 0;border-bottom:1px solid #f0ebe3;">
-                <span style="color:#c9a84c;font-family:Georgia,serif;font-size:13px;">04 —</span>
-                <span style="color:#1a1a2e;font-size:14px;margin-left:10px;">Planifier votre retraite étape par étape</span>
-              </td></tr>
-              <tr><td style="padding:10px 0;">
-                <span style="color:#c9a84c;font-family:Georgia,serif;font-size:13px;">05 —</span>
-                <span style="color:#1a1a2e;font-size:14px;margin-left:10px;">Votre plan d'action personnalisé</span>
-              </td></tr>
-            </table>
-
-            <!-- CTA BUTTON -->
             <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:40px;">
               <tr>
                 <td align="center">
@@ -125,42 +95,23 @@ La phrase doit être directe, sans "Cher/Chère", commencer par son prénom.`;
               </tr>
             </table>
 
-            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:32px;">
-              <tr><td style="border-top:1px solid #f0ebe3;"></td></tr>
-            </table>
-
             <p style="font-size:14px;color:#5a5248;line-height:1.7;margin:0 0 24px 0;">
-              Des questions sur votre situation personnelle ? Répondez directement à cet email ou prenez rendez-vous pour un entretien gratuit et sans engagement.
+              Des questions sur votre situation personnelle ? Répondez directement à cet email.
             </p>
-
             <p style="font-size:15px;color:#1a1a2e;margin:0;">
               Bien à vous,<br>
-              <strong style="font-family:Georgia,serif;font-weight:400;color:#0f1f3d;">Votre Conseiller</strong><br>
-              <span style="font-size:12px;color:#8c8279;">Cabinet Conseil Assurance</span>
-            </p>
-
-          </td>
-        </tr>
-
-        <!-- FOOTER -->
-        <tr>
-          <td style="background:#f4f1eb;padding:28px 48px;border-top:1px solid #e8e2da;">
-            <p style="font-size:11px;color:#a09890;margin:0;line-height:1.6;text-align:center;">
-              Vous recevez cet email car vous avez demandé notre guide.<br>
-              Pour vous désinscrire, répondez "STOP" à cet email.
+              <strong style="font-family:Georgia,serif;font-weight:400;color:#0f1f3d;">Votre Conseiller</strong>
             </p>
           </td>
         </tr>
-
       </table>
     </td>
   </tr>
 </table>
-
 </body>
 </html>`;
 
-        const brevoResponse = await fetch("https://api.brevo.com/v3/smtp/email", {
+        const brevoProspectResponse = await fetch("https://api.brevo.com/v3/smtp/email", {
             method: "POST",
             headers: {
                 "Accept": "application/json",
@@ -174,16 +125,50 @@ La phrase doit être directe, sans "Cher/Chère", commencer par son prénom.`;
                 },
                 to: [{ email: email, name: nom }],
                 subject: `${nom.split(' ')[0]}, votre guide pratique 2026 est prêt`,
-                htmlContent: emailHtml
+                htmlContent: emailHtmlProspect
             })
         });
 
-        if (!brevoResponse.ok) {
-            const err = await brevoResponse.text();
-            console.error("Erreur Brevo:", err);
-            throw new Error("Erreur lors de l'envoi de l'email");
+        if (!brevoProspectResponse.ok) {
+            throw new Error("Erreur lors de l'envoi de l'email au prospect");
         }
 
+        // ─────────────────────────────────────────
+        // ÉTAPE 3 : Alerte à TOI (Le Conseiller) via Brevo
+        // ─────────────────────────────────────────
+        
+        await fetch("https://api.brevo.com/v3/smtp/email", {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "api-key": process.env.BREVO_API_KEY
+            },
+            body: JSON.stringify({
+                sender: { 
+                    name: "Bot d'Acquisition", 
+                    email: process.env.SENDER_EMAIL 
+                },
+                // On s'envoie l'email à soi-même (SENDER_EMAIL)
+                to: [{ email: process.env.SENDER_EMAIL, name: process.env.SENDER_NAME || "Moi" }],
+                subject: `🚨 NOUVEAU PROSPECT : ${nom}`,
+                htmlContent: `
+                    <div style="font-family: sans-serif; padding: 20px; background: #f3f4f6;">
+                        <h2 style="color: #0f1f3d;">Nouveau téléchargement du guide !</h2>
+                        <div style="background: white; padding: 20px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <p><strong>Nom :</strong> ${nom}</p>
+                            <p><strong>Email :</strong> <a href="mailto:${email}">${email}</a></p>
+                            <p><strong>GSM :</strong> <a href="tel:${telephone || ''}">${telephone || "Non renseigné"}</a></p>
+                        </div>
+                        <p style="font-size: 12px; color: #666; margin-top: 20px;">
+                            Pense à ajouter ce contact dans ton téléphone. Tu peux cliquer directement sur le numéro pour l'appeler.
+                        </p>
+                    </div>
+                `
+            })
+        });
+
+        // Confirmation finale au site web
         return {
             statusCode: 200,
             headers: { "Content-Type": "application/json" },
